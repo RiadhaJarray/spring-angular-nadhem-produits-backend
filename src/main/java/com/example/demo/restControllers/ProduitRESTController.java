@@ -3,6 +3,7 @@ package com.example.demo.restControllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.dto.ProduitDTO;
@@ -17,27 +18,28 @@ public class ProduitRESTController {
 	@Autowired 
 	ProduitService produitService;
 	
-	@GetMapping
+	@GetMapping("/all")
 	List<ProduitDTO> getAllProduits(){
 		return produitService.getAllProduits();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/getbyid/{id}")
 	public ProduitDTO getProduitById(@PathVariable("id") Long id) {
 		return produitService.getProduit(id);
 	 }
 	
-	@PostMapping
+	@PostMapping("/addprod")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ProduitDTO createProduit(@RequestBody ProduitDTO produitDTO) {
 		return produitService.saveProduit(produitDTO);
 	}
 	
-	@PutMapping
+	@PutMapping("/updateprod")
 	public ProduitDTO updateProduit(@RequestBody ProduitDTO produitDTO) {
 		return produitService.updateProduit(produitDTO);
 	}
 	
-	@RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+	@RequestMapping(value="/delprod/{id}",method = RequestMethod.DELETE)
 	public void deleteProduit(@PathVariable("id") Long id)
 	{
 		produitService.deleteProduitById(id);
