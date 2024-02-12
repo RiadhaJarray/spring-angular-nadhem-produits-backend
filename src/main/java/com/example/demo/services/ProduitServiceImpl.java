@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.ProduitDTO;
 import com.example.demo.entities.Categorie;
 import com.example.demo.entities.Produit;
+import com.example.demo.repositories.ImageRepository;
 import com.example.demo.repositories.ProduitRepository;
 
 @Service
@@ -20,6 +21,9 @@ public class ProduitServiceImpl implements ProduitService{
 
 	@Autowired
 	ProduitRepository produitRepository;
+	
+	@Autowired
+	ImageRepository imageRepository;
 	
 	@Autowired
 	ModelMapper modelMapper;
@@ -30,10 +34,21 @@ public class ProduitServiceImpl implements ProduitService{
 		return convertEntityToDto(produitRepository.save(convertDtoToEntity(p)));
 	}
 
-	@Override
+	/*@Override
 	public ProduitDTO updateProduit(ProduitDTO p) {
 		return convertEntityToDto(produitRepository.save(convertDtoToEntity(p)));
+	}*/
+	
+	@Override
+	public ProduitDTO updateProduit(ProduitDTO p) {
+		//Long oldProdImageId =  this.getProduit(p.getIdProduit()).getImage().getIdImage();
+		//Long newProdImageId = p.getImage().getIdImage();
+		Produit prodUpdated = produitRepository.save(convertDtoToEntity(p));
+		//if (oldProdImageId != newProdImageId) //si l'image a été modifiée
+			//imageRepository.deleteById(oldProdImageId);
+		return convertEntityToDto(prodUpdated);
 	}
+
 
 	@Override
 	public void deleteProduit(Produit p) {

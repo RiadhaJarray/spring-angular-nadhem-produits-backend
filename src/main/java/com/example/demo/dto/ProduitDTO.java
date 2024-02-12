@@ -1,8 +1,10 @@
 package com.example.demo.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import com.example.demo.entities.Categorie;
+import com.example.demo.entities.Image;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,4 +22,6 @@ private Double prixProduit;
 private Date dateCreation;
 private Categorie categorie;
 private String nomCat;
+//private Image image;
+List<Image> images;
 }
